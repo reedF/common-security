@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+    <!-- HTTP invoker exporter for the ContactManager -->
+    <!-- Spring's HTTP invoker uses Java serialization via HTTP  -->
+    <bean name="/SecurityManager-httpinvoker" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+        <property name="service" ref="securityService"/>
+        <property name="serviceInterface" value="com.reed.security.service.SecurityService"/>
+    </bean>
+
+</beans>
