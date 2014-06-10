@@ -7,6 +7,7 @@
 		<!-- pagination plugin -->
 		<plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin> 
 		<plugin type="org.mybatis.generator.plugin.PaginationMysqlPlugin" />
+		<plugin type="org.mybatis.generator.plugin.OrderByPlugin" />
 		<commentGenerator>
 			<!-- 不生成注解信息 -->
 			<property name="suppressAllComments" value="true" />
