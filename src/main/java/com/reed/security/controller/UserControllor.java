@@ -1,33 +1,24 @@
 package com.reed.security.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.mybatis.generator.plugin.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.SimpleFormController;
 
+import com.reed.common.token.TokenValid;
 import com.reed.security.domain.Group;
-import com.reed.security.domain.Model;
 import com.reed.security.domain.User;
 import com.reed.security.domain.UserGroup;
 import com.reed.security.service.GroupService;
@@ -94,6 +85,7 @@ public class UserControllor {
 	}
 
 	@RequestMapping(value = "/useradd", method = RequestMethod.POST)
+	@TokenValid(removeToken = true)
 	public String addUser(@ModelAttribute("user") User user, Errors errors) {
 		int r = 0;
 		if (user != null) {
@@ -109,6 +101,7 @@ public class UserControllor {
 	}
 
 	@RequestMapping(value = "userview")
+	@TokenValid(saveToken = true)
 	public ModelAndView viewUser(
 			@RequestParam(value = "id", required = false) Integer id) {
 		UserVo u = new UserVo();
@@ -155,6 +148,7 @@ public class UserControllor {
 	}
 
 	@RequestMapping(value = "useredit")
+	@TokenValid(saveToken = true)
 	public ModelAndView editUser(
 			@RequestParam(value = "id", required = true) Integer id) {
 
@@ -162,9 +156,11 @@ public class UserControllor {
 	}
 
 	@RequestMapping(value = "/useredit", method = RequestMethod.POST)
-	public String editUser(UserVo vo, org.springframework.ui.Model model ,Errors errors) {
+	@TokenValid(removeToken = true)
+	public String editUser(UserVo vo, org.springframework.ui.Model model,
+			Errors errors) {
 		int r = 0;
-		//check
+		// check
 		this.validate(vo, errors);
 		if (errors.hasErrors()) {
 			List<Group> all = groupService.findByPage(null, null);
@@ -172,7 +168,7 @@ public class UserControllor {
 			model.addAttribute("userVo", vo);
 			return "edituser";
 		}
-		
+
 		if (vo != null) {
 			User u = vo.getUser();
 			Set<Integer> groups = vo.getGroupIds();
@@ -190,12 +186,13 @@ public class UserControllor {
 		}
 		if (r > 0) {
 			return "redirect:userview.do?id=" + vo.getUser().getId().intValue();
-		} else {				
-			return "useredit.do?id=" + vo.getUser().getId().intValue();			
+		} else {
+			return "useredit.do?id=" + vo.getUser().getId().intValue();
 		}
 	}
 
 	@RequestMapping(value = "/userdel")
+	@TokenValid(removeToken = true)
 	public ModelAndView delete(
 			@RequestParam(value = "id", required = true) Integer id) {
 		int r = 0;

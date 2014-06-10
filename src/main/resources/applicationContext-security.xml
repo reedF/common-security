@@ -11,6 +11,7 @@
 	<http pattern="/admin/*.jsp" security="none" />
 	<http pattern="/timeout.html" security="none" />
 	<http pattern="/error.html" security="none" />
+	<http pattern="/error/**" security="none" />
 
 	<http access-denied-page="/error.html" use-expressions="true"
 		entry-point-ref="authenticationProcessingFilterEntryPoint">

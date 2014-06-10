@@ -16,13 +16,18 @@
 </script> 
 </head>
 <body>
+<%
+String t = (String)request.getAttribute("_check_token");
+System.out.println(t);
+%>
 <sf:errors path="*"/>
 <sf:form id="sf" method="POST" modelAttribute="userVo"  
-        action="useredit.do">   
-        <fieldset>  
+        action="useredit.do">  
+        <fieldset> 
             <legend>Edit</legend>  
             <table cellspacing="0">  
                 <tr> 
+                	<input type="hidden" value="<%=t %>" name="_check_token"/>
                     <sf:hidden path="user.id" />  
                     <sf:hidden path="user.password" />  
                     <td><sf:label path="user.account">Account:</sf:label>  
