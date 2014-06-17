@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration>
-<!-- 	<classPathEntry
-		location="D:\workspace\common-security\WebContent\WEB-INF\lib\mysql-connector-java-5.1.17.jar" /> -->
 	<classPathEntry
-		location="D:\workspace\common-security\WebContent\WEB-INF\lib\postgresql-9.1-901-1.jdbc4.jar" />
+		location="D:\data\maven-repos\postgresql\postgresql\9.1-901-1.jdbc4\postgresql-9.1-901-1.jdbc4.jar" />
 	<context id="context1">
+		<property name="javaFileEncoding" value="utf-8"/>
 		<!-- pagination plugin -->
-		<plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin> 
-<!-- 		<plugin type="org.mybatis.generator.plugin.PaginationMysqlPlugin" /> -->
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>
+		<!-- <plugin type="org.mybatis.generator.plugin.PaginationMysqlPlugin" 
+			/> -->
 		<plugin type="org.mybatis.generator.plugin.PaginationPGPlugin" />
+		<plugin type="org.mybatis.generator.plugin.CommentPlugin">
+			<property name="modelClassAuthor" value="reed" />
+		</plugin>
 		<commentGenerator>
 			<!-- 不生成注解信息 -->
 			<property name="suppressAllComments" value="true" />
@@ -17,7 +20,7 @@
 
 		<jdbcConnection driverClass="org.postgresql.Driver"
 			connectionURL="jdbc:postgresql://localhost:5432/test" userId="postgres"
-			password="1234" />
+			password="123456" />
 
 		<javaTypeResolver>
 			<property name="forceBigDecimals" value="false" />
@@ -29,15 +32,14 @@
 			targetProject="common-security" />
 		<javaClientGenerator targetPackage="com.test.mapper"
 			targetProject="common-security" type="XMLMAPPER" />
-		<table schema="" tableName="ls_s_user" domainObjectName="User"/>
-<!-- 		<table schema="" tableName="ls_s_role" domainObjectName="Role"/>
-		<table schema="" tableName="ls_s_user_group" domainObjectName="UserGroup"/>
-		<table schema="" tableName="ls_s_role_resource" domainObjectName="RoleResource"/>
-		<table schema="" tableName="ls_s_model" domainObjectName="Model"/>
-		<table schema="" tableName="ls_s_group" domainObjectName="Group"/>
-		<table schema="" tableName="ls_s_role_group" domainObjectName="RoleGroup"/>
-		<table schema="" tableName="ls_s_resource" domainObjectName="Resource">
-			columnOverride column="???" property="???" /
-		</table> -->
+		<table schema="crm" tableName="test" domainObjectName="Test" />
+		<!-- <table schema="" tableName="ls_s_role" domainObjectName="Role"/> <table 
+			schema="" tableName="ls_s_user_group" domainObjectName="UserGroup"/> <table 
+			schema="" tableName="ls_s_role_resource" domainObjectName="RoleResource"/> 
+			<table schema="" tableName="ls_s_model" domainObjectName="Model"/> <table 
+			schema="" tableName="ls_s_group" domainObjectName="Group"/> <table schema="" 
+			tableName="ls_s_role_group" domainObjectName="RoleGroup"/> <table schema="" 
+			tableName="ls_s_resource" domainObjectName="Resource"> columnOverride column="???" 
+			property="???" / </table> -->
 	</context>
 </generatorConfiguration>
