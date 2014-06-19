@@ -54,6 +54,13 @@
 				<property name="testOnReturn" value="${token.redis.pool.testOnReturn?false}" />
 			</bean>
 		</property>
-	</bean> -->
-	
+	</bean> 
+-->	
+
+				<!-- setting for jedis-2.1.0
+				<property name="maxActive" value="${redis.pool.maxActive?20}" />
+				<property name="maxIdle" value="${redis.pool.maxIdle?10}" />
+				<property name="maxWait" value="${redis.pool.maxWait?2000}" />
+				<property name="testOnBorrow" value="${redis.pool.testOnBorrow?true}" />
+				<property name="testOnReturn" value="${redis.pool.testOnReturn?false}" /-->
 </beans>
