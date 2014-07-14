@@ -41,8 +41,8 @@ public class BaseUserDetailServiceImpl implements UserDetailsService {
 	private SecurityService securityService;
 
 	// 使用缓存
-	@Autowired
-	private UserCache userCache;
+	// @Autowired
+	// private UserCache userCache;
 
 	// 登录验证
 	public UserDetails loadUserByUsername(String username)

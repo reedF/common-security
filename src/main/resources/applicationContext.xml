@@ -48,7 +48,7 @@
 	<!-- Mybatis -->
 	<import resource="app-mybatis.xml" />
 	<!-- Ehcache -->
-    <import resource="app-cached.xml" />
+    <import resource="app-cache-aop.xml" />
 
 
 	<bean id="transactionManager"

@@ -1,0 +1,27 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans    
+	http://www.springframework.org/schema/beans/spring-beans.xsd     
+	http://www.springframework.org/schema/cache     
+	http://www.springframework.org/schema/cache/spring-cache.xsd">
+
+	<!-- enable annotation cache -->
+	<cache:annotation-driven />
+
+	<!-- redis -->
+	<!--import resource="redis.xml"/ -->
+	<!-- ehcache -->
+	<import resource="app-cache-ehcache.xml" />
+	<!-- using interceptor to cache if not using spring @cahche -->
+	<!-- <import resource="app-cache-interceptor.xml" /> -->
+
+	<!-- key Generator -->
+	<bean id="keyGenerator" class="com.reed.common.cache.key.MyKeyGenerator" />
+	<cache:annotation-driven key-generator="keyGenerator" />
+
+	<!-- generic spring simple cache manager -->
+	<!-- <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager"> 
+		<property name="caches"> <set> <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" 
+		p:name="default" /> </set> </property> </bean> -->
+</beans>

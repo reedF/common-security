@@ -17,6 +17,24 @@
      http://www.springframework.org/schema/task
      http://www.springframework.org/schema/task/spring-task-3.2.xsd">
 
+	<!-- 启用spring security用户的缓存功能 -->
+	<bean id="userCache"
+		class="org.springframework.security.core.userdetails.cache.EhCacheBasedUserCache">
+		<property name="cache" ref="userEhCache" />
+	</bean>
+	<bean id="userEhCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+		<property name="cacheName" value="userCache" />
+		<property name="cacheManager" ref="ehcacheManager" />
+	</bean>
+	<!-- end spring security缓存功能 -->
+	
+	<!-- domain cache -->
+	<bean id="domainEhCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+		<property name="cacheName" value="domainCache" />
+		<property name="cacheManager" ref="ehcacheManager" />
+	</bean>
+	<!-- daomain cache end -->
+
 	<!-- find/create cache拦截器 -->
 	<bean id="methodCacheInterceptor"
 		class="com.reed.common.ehcache.intercepeor.MethodCacheInterceptor">
