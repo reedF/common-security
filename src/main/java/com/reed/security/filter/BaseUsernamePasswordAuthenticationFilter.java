@@ -1,5 +1,8 @@
 package com.reed.security.filter;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -8,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
-import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -18,6 +20,9 @@ import com.reed.security.service.UserService;
 
 public class BaseUsernamePasswordAuthenticationFilter extends
 		UsernamePasswordAuthenticationFilter {
+	/** 当前server session集合 */
+	public static final Map<String, String> OnlineUserList = new HashMap<String, String>();
+
 	public static final String VALIDATE_CODE = "validateCode";
 	public static final String USERNAME = "username";
 	public static final String PASSWORD = "password";
@@ -65,7 +70,9 @@ public class BaseUsernamePasswordAuthenticationFilter extends
 			throw new AuthenticationServiceException(
 					"password or username is notEquals");
 		}
-
+		
+		refushSession(request, user);
+		
 		// UsernamePasswordAuthenticationToken实现 Authentication
 		UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(
 				username, password);
@@ -89,6 +96,17 @@ public class BaseUsernamePasswordAuthenticationFilter extends
 				|| !sessionValidateCode.equalsIgnoreCase(validateCodeParameter)) {
 			throw new AuthenticationServiceException("validateCode.notEquals");
 		}
+	}
+
+	/**
+	 * 登录成功后为对应session赋用户值
+	 * 
+	 * @param request
+	 * @param user
+	 */
+	private void refushSession(HttpServletRequest request, User user) {
+		String sessionId = request.getSession().getId();
+		OnlineUserList.put(sessionId, user.getId().toString());
 	}
 
 	private String obtainValidateCodeParameter(HttpServletRequest request) {
