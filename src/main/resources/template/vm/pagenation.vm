@@ -1,0 +1,107 @@
+#* 
+ * 分页宏 
+ * author: reed 
+ *# 
+#macro(pager $__url $__page $__page_total) 
+  
+    ## 1... 4 5 <6> 7 8 ...100 
+    ## 5 
+	#set($__PAGE_HEAD_LEN = 5)
+    ## 96 
+    #set($__PAGE_TAIL_LEN = $__page_total - $__PAGE_HEAD_LEN + 1) 
+    ## pre & next offset 
+    #set($__PAGE_OFFSET = 2) 
+      
+    #set($__PAGE_HEAD_FLAG = $__PAGE_HEAD_LEN - $__PAGE_OFFSET) 
+    #set($__PAGE_TAIL_FLAG = $__PAGE_TAIL_LEN + $__PAGE_OFFSET) 
+
+    ## $__page <= 5 
+    #if($__page <= $__PAGE_HEAD_LEN) 
+        #if($__page == 1) 
+            <a href="javascript:void(0)" disabled="true">上一页</a> 
+        #else 
+            #set($__pre_page = $__page - 1) 
+            <a href="$__url$__pre_page">上一页</a> 
+        #end 
+        #if($__page <= $__PAGE_HEAD_FLAG) 
+            ## 1 2 <3> 4 5 
+            #foreach($__p in [1..$__PAGE_HEAD_LEN]) 
+                #if($__p == $__page) 
+                    <a href="javascript:void(0);" disabled="true">$__p</a> 
+                #elseif($__p <= $__page_total) 
+                    <a href="$__url$__p" >$__p</a> 
+                #end 
+            #end 
+        #else 
+            ## 1 2 3 <4> 5 6
+			#if($__page + $__PAGE_OFFSET <= $__page_total)
+				#set($__len = $__page + $__PAGE_OFFSET)
+			#else
+				#set($__len = $__page_total)
+			#end
+            #foreach($__p in [1..$__len]) 
+                #if($__p == $__page) 
+                    <a href="javascript:void(0);" disabled="true">$__p</a> 
+                #else 
+                    <a href="$url$__p" >$__p</a> 
+                #end 
+            #end 
+        #end 
+        <span>...</span> 
+        <a href="$__url$__page_total">$__page_total</a> 
+        #set($__next_page = $__page + 1) 
+		#if($__next_page <= $__page_total)
+        <a href="$__url$__next_page">下一页</a> 
+		#end
+    #elseif($__page >= $__PAGE_TAIL_LEN) 
+        ## 1...94 95 <96> 97 98 99 100 
+        #set($__pre_page = $__page - 1) 
+            <a href="$__url$__pre_page">上一页</a> 
+        ## 1...96 97 <98> 99 100 
+        #if($__page >= $__PAGE_TAIL_FLAG) 
+            #foreach($__p in [$__PAGE_TAIL_FLAG..$__page_total]) 
+                #if($__p == $__page) 
+                    <a href="javascript:void(0);" disabled="true">$__p</a> 
+                #else 
+                    <a href="$url$__p">$__p</a> 
+                #end 
+            #end 
+        #else 
+            ## 1...94 95 <96> 97 98 99 100 
+            #set($__len = $__page - $__PAGE_OFFSET) 
+			#if($__len > 0)
+				#foreach($__p in [$__len..$__page_total]) 
+					#if($__p == $__page) 
+						<a href="javascript:void(0);" disabled="true">$__p</a> 
+					#else 
+						<a href="$url$__p">$__p</a> 
+					#end 
+				#end 
+			#end
+        #end 
+        #if($__page == $__page_total) 
+            <a href="javascript:void(0);" disabled="true">下一页</a> 
+        #else 
+            #set($__pre_page = $__page + 1) 
+            <a href="$url$__pre_page">上一页</a> 
+        #end 
+    #else 
+        #set($__pre_page = $__page - 1) 
+        <a href=""$url$__pre_page">上一页</a>  
+        <a href=""$url1">1</a> 
+        <span>...</span> 
+        #set($__start = $__page - $__PAGE_OFFSET) 
+        #set($__end = $__page + $__PAGE_OFFSET) 
+        #foreach($__p in [$__start..$__end]) 
+            #if($__p == $__page) 
+                <a href="javascript:void(0);" disabled="true" >$__p</a> 
+            #else 
+                <a href="$url$__p" >$__p</a> 
+            #end 
+        #end 
+        <span>...</span> 
+        <a href="$url$__page_total">$__page_total</a> 
+        #set($__pre_page = $__page + 1) 
+        <a href="$url$__pre_page">上一页</a> 
+    #end 
+#end

@@ -16,8 +16,13 @@
 </script> 
 </head>
 <body>
+<%
+String t = (String)request.getAttribute("_check_token");
+System.out.println(t);
+%>
 <form:errors></form:errors> 
 <form  method="post" action="useradd.do" name="user">   
+	<input type="hidden" value="<%=t %>" name="_check_token"/>
     Account:<input id="account" name="account" type="text" /><br> 
     Password:<input id="password" name="password" type="password"/> <br> 
     Email:<input id="email" name="email" type="text"/><br>  

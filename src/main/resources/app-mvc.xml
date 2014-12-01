@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
+
+	<bean id="viewResolver" class="com.reed.common.mvc.multiple.view.MultipleViewResolver">
+		<property name="defaultViewResolver" ref="beanNameViewResolver" />
+		<property name="viewResolverMap">
+			<map>
+				<entry>
+					<key>
+						<set>
+							<value>.jsp</value>
+						</set>
+					</key>
+					<ref bean="jspViewResolver" />
+				</entry>
+				<entry>
+					<key>
+						<set>
+							<value>.vm</value>
+							<value>.htm</value>
+						</set>
+					</key>
+					<ref bean="velocityViewResolver" />
+				</entry>
+				<entry>
+					<key>
+						<value>.ftl</value>
+					</key>
+					<ref bean="freeMarkerViewResolver" />
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<bean id="beanNameViewResolver"
+		class="org.springframework.web.servlet.view.BeanNameViewResolver" />
+
+	<bean id="jspViewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="" />
+	</bean>
+	<!-- base config -->
+	<bean id="baseTemplateConfig" abstract="true">
+		<property name="prefix" value="" />
+		<property name="order" value="0" />
+		<property name="cache" value="false" />
+		<property name="contentType" value="text/html;charset=utf-8" />
+		<property name="exposeRequestAttributes" value="true" />
+		<property name="exposeSessionAttributes" value="true" />
+		<property name="exposeSpringMacroHelpers" value="true" />
+	</bean>
+	<!-- Velocity ViewResolver Configuration -->
+	<bean id="velocityViewResolver" parent="baseTemplateConfig"
+		class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.velocity.VelocityView" />
+	</bean>
+
+	<!-- Velocity Configuration -->
+	<bean id="velocityConfig"
+		class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+		<!-- velocity模板路径 -->
+		<property name="resourceLoaderPath" value="classpath:/template/vm" />
+		<property name="velocityProperties">
+			<props>
+				<prop key="input.encoding">UTF-8</prop>
+				<prop key="output.encoding">UTF-8</prop>
+				<prop key="file.resource.loader.cache">true</prop>
+			</props>
+		</property>
+
+	</bean>
+
+	<!-- FreeMarker ViewResolver Configuration -->
+	<bean id="freeMarkerViewResolver" parent="baseTemplateConfig"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" />
+	</bean>
+
+	<!-- FreeMarker Configuration -->
+	<bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape" />
+	<bean id="freemarkerConfig"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<!-- 模板路径 -->
+		<property name="templateLoaderPath" value="classpath:/template/ftl" />
+		<property name="defaultEncoding" value="utf-8" />
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="template_update_delay">10</prop>
+				<prop key="locale">zh_CN</prop>
+				<prop key="datetime_format">yyyy-MM-dd</prop>
+				<prop key="date_format">yyyy-MM-dd</prop>
+				<prop key="number_format">#.##</prop>
+			</props>
+		</property>
+		<property name="freemarkerVariables">
+			<map>
+				<entry key="xml_escape" value-ref="fmXmlEscape" />
+			</map>
+		</property>
+	</bean>
+
+
+	<!-- ex -->
+	<bean
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="java.lang.Exception">error/error</prop>
+				<prop key="java.lang.Throwable">error/error</prop>
+				<prop key="java.lang.RuntimeException">error/error</prop>
+				<prop key="java.sql.SQLException">error/error</prop>
+			</props>
+		</property>
+		<property name="statusCodes">
+			<props>
+				<prop key="error/error">500</prop>
+			</props>
+		</property>
+		<property name="warnLogCategory" value="WARN" />
+		<property name="defaultErrorView" value="error/error" />
+		<property name="defaultStatusCode" value="500" />
+	</bean>
+</beans>

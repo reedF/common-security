@@ -8,18 +8,19 @@
 	<http pattern="/js/**" security="none" />
 	<http pattern="/resource/**" security="none"></http>
 	<http pattern="/login.jsp" security="none" />
-	<http pattern="/admin/*.jsp" security="none" />
-	<http pattern="/timeout.html" security="none" />
-	<http pattern="/error.html" security="none" />
+	<!-- <http pattern="/admin/*.jsp" security="none" /> -->
+	<http pattern="/timeout.jsp" security="none" />
+	<http pattern="/error.jsp" security="none" />
 	<http pattern="/error/**" security="none" />
 
-	<http access-denied-page="/error.html" use-expressions="true"
+
+	<http access-denied-page="/error.jsp" use-expressions="true"
 		entry-point-ref="authenticationProcessingFilterEntryPoint">
 
 		<logout />
 		<!-- 实现免登陆验证 -->
 		<remember-me />
-		<session-management invalid-session-url="/timeout.html">
+		<session-management invalid-session-url="/timeout.jsp">
 			<concurrency-control max-sessions="10"
 				error-if-maximum-exceeded="true" />
 		</session-management>

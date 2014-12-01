@@ -6,8 +6,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * global exception handler
@@ -15,7 +17,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
  * @author reed
  * 
  */
-// @Component
+@Controller
 @ControllerAdvice
 public class ExceptionController {
 
@@ -26,13 +28,22 @@ public class ExceptionController {
 	// HttpServletResponse response, Object handler, Exception ex) {
 	// return null;
 	// }
+	@RequestMapping("/error.jsp")
+	public String error() {
+		return "error.jsp";
+	}
+
+	@RequestMapping("/timeout.jsp")
+	public String timeout() {
+		return "timeout.jsp";
+	}
 
 	// @ResponseBody
 	@ExceptionHandler
 	public String exp(Exception ex, HttpServletRequest request) {
 		String r = "/error/error";
 		if (null != ex) {
-			String msg = formatRequest(request) + ex.getMessage();
+			String msg = formatRequest(request) + "<h1 style='color:red'>" + ex.getMessage() + "</h1>";
 			logger.error(msg, ex);
 			request.setAttribute("error", msg);
 		}
@@ -49,13 +60,13 @@ public class ExceptionController {
 		String errorId = java.util.UUID.randomUUID().toString();
 		StringBuffer sb = new StringBuffer();
 		sb.append("errorId:").append(errorId);
-		sb.append(", header:").append(printHeader(request));
-		sb.append(", protocol:").append(request.getProtocol());
-		sb.append(", method:").append(request.getMethod());
-		sb.append(", requestUri:").append(request.getRequestURI());
-		sb.append(", requestParameters:").append(printParameters(request));
-		sb.append(", clientIP:").append(request.getRemoteAddr());
-		sb.append(", exception:");
+		sb.append(", <br>header:").append(printHeader(request));
+		sb.append(", <br>protocol:").append(request.getProtocol());
+		sb.append(", <br>method:").append(request.getMethod());
+		sb.append(", <br>requestUri:").append(request.getRequestURI());
+		sb.append(", <br>requestParameters:").append(printParameters(request));
+		sb.append(", <br>clientIP:").append(request.getRemoteAddr());
+		sb.append(", <br>exception:");
 		return sb.toString();
 	}
 

@@ -15,10 +15,10 @@ import com.reed.security.filter.BaseUsernamePasswordAuthenticationFilter;
  * 扩展的HttpSessionEventPublisher 支持在线人数统计
  * 
  */
-public class OnlineSessionHttpSessionEventPublisher extends
+public class OnlineHttpSessionEventPublisher extends
 		HttpSessionEventPublisher {
 	private static Log logger = LogFactory
-			.getLog(OnlineSessionHttpSessionEventPublisher.class);
+			.getLog(OnlineHttpSessionEventPublisher.class);
 
 	@Override
 	public void sessionCreated(HttpSessionEvent event) {

@@ -22,6 +22,9 @@ Menu <br>
 
 <a href="admin/listrole.do">List Role</a><br>
 
+<a href="template/listuser">VM:List User</a><br>
+
+<a href="template/listuser?t=1">FTL:List User</a><br>
 <br>
 Hello! <span style="color:red">Current user:<sec:authentication property="name"/></span>
 <br>

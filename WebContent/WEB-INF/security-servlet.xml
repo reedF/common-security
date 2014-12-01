@@ -22,29 +22,6 @@
     <!--bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
         <property name="basename" value="messages"/>
     </bean-->
-
-    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value=""/>
-        <property name="suffix" value=".jsp"/>
-    </bean>
-
-	<!-- ex -->
-	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-		<property name="exceptionMappings">
-			<props>
-				<prop key="java.lang.Exception">error/error</prop>
-				<prop key="java.lang.Throwable">error/error</prop>
-				<prop key="java.lang.RuntimeException">error/error</prop>
-				<prop key="java.sql.SQLException">error/error</prop>
-			</props>
-		</property>
-		<property name="statusCodes">
-			<props>
-				<prop key="error/error">500</prop>
-			</props>
-		</property>
-		<property name="warnLogCategory" value="WARN" />
-		<property name="defaultErrorView" value="error/error" />
-		<property name="defaultStatusCode" value="500" />
-	</bean>
+	 <import resource="classpath:app-mvc.xml"/>
+	 
 </beans>
