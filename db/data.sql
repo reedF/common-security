@@ -34,6 +34,7 @@ LOCK TABLES `ls_s_model` WRITE;
 /*!40000 ALTER TABLE `ls_s_model` DISABLE KEYS */;
 INSERT INTO `ls_s_model` VALUES (1,'系统服务管理','/admin','2013-05-10 12:09:39','2013-05-13 14:11:14');
 INSERT INTO `ls_s_model` VALUES (2,'Home','/','2013-05-10 12:09:39','2013-05-13 14:15:18');
+INSERT INTO `ls_s_model` VALUES (3,'模版视图','/temlpate','2013-05-10 12:09:39','2013-05-13 14:15:18');
 /*!40000 ALTER TABLE `ls_s_model` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -69,6 +70,7 @@ INSERT INTO `ls_s_resource` VALUES (23,'查看角色','roleview.do',1,'/admin/ro
 INSERT INTO `ls_s_resource` VALUES (24,'添加角色','roleadd.do',1,'/admin/roleadd.do','2013-05-14 15:47:06',NULL);
 INSERT INTO `ls_s_resource` VALUES (25,'更新角色','roleedit.do',1,'/admin/roleedit.do','2013-05-14 15:47:30',NULL);
 INSERT INTO `ls_s_resource` VALUES (26,'删除角色','roledel.do',1,'/admin/roledel.do','2013-05-14 15:47:45',NULL);
+INSERT INTO `ls_s_resource` VALUES (27,'模版视图查看用户列表','listuser',3,'/template/listuser','2013-05-14 15:47:45',NULL);
 /*!40000 ALTER TABLE `ls_s_resource` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -132,6 +134,7 @@ INSERT INTO `ls_s_role_resource` VALUES (27,26,1);
 INSERT INTO `ls_s_role_resource` VALUES (33,2,3);
 INSERT INTO `ls_s_role_resource` VALUES (34,4,3);
 INSERT INTO `ls_s_role_resource` VALUES (35,5,3);
+INSERT INTO `ls_s_role_resource` VALUES (36,27,1);
 /*!40000 ALTER TABLE `ls_s_role_resource` ENABLE KEYS */;
 UNLOCK TABLES;
 
