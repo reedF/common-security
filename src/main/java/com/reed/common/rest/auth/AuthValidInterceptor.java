@@ -65,6 +65,9 @@ public class AuthValidInterceptor extends HandlerInterceptorAdapter {
 				makeUpResponse(response, "请求URL失败!", RetdCodeType.EX_APP);
 			}
 		}
+		// 允许跨域
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		
 		return r;
 	}
 
