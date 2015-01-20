@@ -1,24 +1,13 @@
 package com.test.dao;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,6 +16,10 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.reed.common.rest.vo.PageVo;
+import com.reed.common.util.JsonUtil;
+import com.reed.security.domain.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
@@ -62,7 +55,6 @@ public class TestBase extends AbstractJUnit4SpringContextTests {
 		}
 	}
 
-
 	public static String md5(String source) {
 
 		StringBuffer sb = new StringBuffer(32);
@@ -81,6 +73,15 @@ public class TestBase extends AbstractJUnit4SpringContextTests {
 		}
 
 		return sb.toString();
+	}
+
+	@Test
+	public  void testJson() {
+		PageVo<User> p = new PageVo<User>(10);
+		String json = JsonUtil.toJson(p);
+		PageVo<User> p2 = (PageVo<User>) JsonUtil.json2Object(json,
+				PageVo.class);
+		System.out.println("===========>" + p.getPageNo() + p2.getPageNo());
 	}
 
 }
