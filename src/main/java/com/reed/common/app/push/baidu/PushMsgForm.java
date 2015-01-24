@@ -34,7 +34,16 @@ public class PushMsgForm extends BaiduBaseForm {
 	/** 消息唯一标识 */
 	private String msg_keys;
 	/** 过期时间 */
-	private long message_expires;
+	private Long message_expires;
+	
+	/**
+	 * 部署状态。指定应用当前的部署状态，可取值： 1：开发状态
+	 * 
+	 * 2：生产状态
+	 * 
+	 * 若不指定，则默认设置为生产状态。特别提醒：该功能只支持ios设备类型。
+	 */
+	private short deploy_status = 2;
 
 	public short getPush_type() {
 		return push_type;
@@ -100,11 +109,11 @@ public class PushMsgForm extends BaiduBaseForm {
 		this.msg_keys = msg_keys;
 	}
 
-	public long getMessage_expires() {
+	public Long getMessage_expires() {
 		return message_expires;
 	}
 
-	public void setMessage_expires(long message_expires) {
+	public void setMessage_expires(Long message_expires) {
 		this.message_expires = message_expires;
 	}
 

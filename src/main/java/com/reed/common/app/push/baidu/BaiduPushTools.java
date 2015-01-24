@@ -38,7 +38,7 @@ public class BaiduPushTools {
 	public static final String push_msg = "http://channel.api.duapp.com/rest/2.0/channel/channel";
 
 	/**
-	 * 推送消息
+	 * 推送消息,推送类型push_type=3，所有人时，会按本字段推送到对应设备，其他设备不会收到广播
 	 * 
 	 * @param f
 	 *            参数列表
@@ -154,7 +154,7 @@ public class BaiduPushTools {
 		f.setMsg_keys("" + new Date().getTime());
 		f.setPush_type((short) 1);
 		f.setTag(null);
-
+		f.setDevice_type((short)1);
 		BaiduPushTools.pushMsg(f, "XKKkIHFAdXqRBIWd2QLGuGYOAeibQKoT");
 	}
 }
