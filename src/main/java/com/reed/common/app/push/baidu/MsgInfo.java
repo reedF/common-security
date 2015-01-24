@@ -5,8 +5,7 @@ import java.util.Map;
 
 /**
  * Baidu message_type = 1 (通知类型) doc:
- * http://developer.baidu.com/wiki/index.php?title
- * =docs/cplat/push/api/list#push_msg
+ * http://developer.baidu.com/wiki/index.php?title=docs/cplat/push/api/list#push_msg
  * 
  * { //android必选，ios可选 "title" : "hello" , “description: "hello world"
  * 
