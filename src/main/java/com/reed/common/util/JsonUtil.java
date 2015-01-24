@@ -5,7 +5,10 @@
 package com.reed.common.util;
 
 import org.apache.commons.lang.StringUtils;
+import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.SerializationConfig.Feature;
+import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.codehaus.jackson.map.ser.StdSerializerProvider;
 import org.codehaus.jackson.type.TypeReference;
 import org.slf4j.Logger;
@@ -38,6 +41,9 @@ public final class JsonUtil {
 	static {
 		StdSerializerProvider sp = new StdSerializerProvider();
 		OBJECT_MAPPER = new ObjectMapper(null, sp, null);
+		OBJECT_MAPPER.getSerializationConfig().withSerializationInclusion(Inclusion.NON_NULL);
+		OBJECT_MAPPER.getSerializationConfig().with(Feature.SORT_PROPERTIES_ALPHABETICALLY);
+		OBJECT_MAPPER.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 	}
 
 	public static ObjectMapper getObjectMapper() {
