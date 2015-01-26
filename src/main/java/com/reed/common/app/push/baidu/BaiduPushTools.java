@@ -38,7 +38,8 @@ public class BaiduPushTools {
 	public static final String push_msg = "http://channel.api.duapp.com/rest/2.0/channel/channel";
 
 	/**
-	 * 推送消息,推送类型push_type=3，所有人时，会按本字段推送到对应设备，其他设备不会收到广播
+	 * 推送消息,自定义具体推送参数. 注： (1)推送类型push_type=3所有人时，会按device_type推送到对应设备，其他设备不会收到广播
+	 * (2)PushMsgForm.deploy_status=1时，仅推送给测试环境，线上用户无法获取
 	 * 
 	 * @param f
 	 *            参数列表
@@ -61,6 +62,88 @@ public class BaiduPushTools {
 				}
 			}
 		}
+	}
+
+	/**
+	 * 广播，推送给secretKey对应app的ios与android
+	 * 
+	 * @param f
+	 * @param isTest
+	 *            是否是测试环境
+	 * @param secretKey
+	 */
+	public static void boradcastMsg(PushMsgForm f, boolean isTest,
+			String secretKey) {
+		if (isTest) {
+			f.setDeploy_status((short) 1);
+		}
+		// ios
+		f.setDevice_type((short) 4);
+		BaiduPushTools.pushMsg(f, secretKey);
+		// android
+		f.setDevice_type((short) 3);
+		BaiduPushTools.pushMsg(f, secretKey);
+	}
+
+	/**
+	 * 广播，推送给secretKey对应app的ios与android
+	 * 
+	 * @param title
+	 *            标题
+	 * @param msg
+	 *            消息体
+	 * @param isTest
+	 *            是否是测试环境
+	 * @param apiKey
+	 *            app key
+	 * @param secretKey
+	 *            app secretKey
+	 */
+	public void boradcastMsg(String title, String msg, boolean isTest,
+			String apiKey, String secretKey) {
+		PushMsgForm f = new PushMsgForm();
+		f.setApikey(apiKey);
+		f.setPush_type((short) 3);
+		f.setMessage_type((short) 1);
+		f.setMsg(title, msg);
+		f.setMsg_keys("" + new Date().getTime());
+		f.setTag(null);
+		if (isTest) {
+			// test
+			f.setDeploy_status((short) 1);
+		}
+		BaiduPushTools.boradcastMsg(f, isTest, secretKey);
+	}
+
+	/**
+	 * 推送给单个人
+	 * 
+	 * @param userId
+	 * @param channelId
+	 * @param title
+	 * @param msg
+	 * @param isTest
+	 *            是否是测试环境
+	 * @param apiKey
+	 * @param secretKey
+	 */
+	public void pushMsgToTarget(Long userId, Long channelId, String title,
+			String msg, boolean isTest, String apiKey, String secretKey) {
+		PushMsgForm f = new PushMsgForm();
+		f.setUser_id(userId);
+		f.setChannel_id(channelId);
+		f.setApikey(apiKey);
+		f.setPush_type((short) 1);
+		f.setMessage_type((short) 1);
+		f.setDevice_type((short) 4);
+		f.setMsg(title, msg);
+		f.setMsg_keys("" + new Date().getTime());
+		f.setTag(null);
+		if (isTest) {
+			// test
+			f.setDeploy_status((short) 1);
+		}
+		BaiduPushTools.pushMsg(f, secretKey);
 	}
 
 	/**
@@ -137,24 +220,25 @@ public class BaiduPushTools {
 	}
 
 	public static void main(String[] args) {
-		PushMsgForm f = new PushMsgForm();
-		f.setApikey("lSW1ekBWCRw7rqpQZrNVfnLs");
-		f.setUser_id(603789426887031103l);
-		f.setChannel_id(4050060892618280481l);
-		f.setMessage_type((short) 1);
-		f.setMsg("title", "" + new Date().getTime());
-		f.setDevice_type((short) 4);
-		// f.setMessages("test");
-		// if (f.getMessage_type() == 1) {
-		// MsgInfo m = new MsgInfo("title", "des");
-		// f.setMessages(JsonUtil.toJson(m));
-		// } else {
-		// f.setMessages("test");
-		// }
-		f.setMsg_keys("" + new Date().getTime());
-		f.setPush_type((short) 1);
-		f.setTag(null);
-		f.setDevice_type((short)1);
-		BaiduPushTools.pushMsg(f, "XKKkIHFAdXqRBIWd2QLGuGYOAeibQKoT");
+		String apiKey = "lSW1ekBWCRw7rqpQZrNVfnLs";
+		String secKey = "XKKkIHFAdXqRBIWd2QLGuGYOAeibQKoT";
+		// PushMsgForm f = new PushMsgForm();
+		// f.setApikey(apiKey);
+		// f.setUser_id(603789426887031103l);
+		// f.setChannel_id(4050060892618280481l);
+		// f.setMessage_type((short) 1);
+		// f.setMsg("title", JsonUtil.toJson(f));
+		// f.setDevice_type((short) 4);
+		// f.setMsg_keys("" + new Date().getTime());
+		// f.setPush_type((short) 1);
+		// f.setTag(null);
+		// f.setDeploy_status((short) 1);
+		// BaiduPushTools.pushMsg(f, secKey);
+
+		BaiduPushTools t = new BaiduPushTools();
+		// t.boradcastMsg("test", "" + new Date().getTime(),true, apiKey,
+		// secKey);
+		t.pushMsgToTarget(603789426887031103l, 4050060892618280481l, "test", ""
+				+ new Date().getTime(), true, apiKey, secKey);
 	}
 }

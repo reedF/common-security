@@ -7,7 +7,7 @@ import com.reed.common.util.JsonUtil;
  * ://developer.baidu.com/wiki/index.php?title=docs
  * /cplat/push/faq#.E4.B8.BA.E4.BD.95.E9.80.9A.E8.BF.87Server_SDK.E6
  * .8E.A8.E9.80.81.E6.88.90.E5.8A.9F.EF.BC.8CAndroid.E7.AB.AF.E5.8D.B4.E6.94.B6.E4.B8.8D.E5.88.B0.E9.80.9A.E7.9F.A5.EF.BC.9F
- * }
+ * * }
  * 
  * @author reed
  * 
@@ -35,7 +35,7 @@ public class PushMsgForm extends BaiduBaseForm {
 	private String msg_keys;
 	/** 过期时间 */
 	private Long message_expires;
-	
+
 	/**
 	 * 部署状态。指定应用当前的部署状态，可取值： 1：开发状态
 	 * 
@@ -44,6 +44,14 @@ public class PushMsgForm extends BaiduBaseForm {
 	 * 若不指定，则默认设置为生产状态。特别提醒：该功能只支持ios设备类型。
 	 */
 	private short deploy_status = 2;
+
+	public short getDeploy_status() {
+		return deploy_status;
+	}
+
+	public void setDeploy_status(short deploy_status) {
+		this.deploy_status = deploy_status;
+	}
 
 	public short getPush_type() {
 		return push_type;

@@ -122,6 +122,7 @@ public class HttpClientTool {
 		try {
 			postMethod.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
 			HttpResponse response = httpClient.execute(postMethod);
+			logger.info("请求参数={}", nvps.toString());
 			int statusCode = response.getStatusLine().getStatusCode();
 			resp = EntityUtils.toString(response.getEntity());
 			if (statusCode != HttpStatus.SC_OK) {
@@ -163,6 +164,7 @@ public class HttpClientTool {
 		try {
 			postMethod.setEntity(new UrlEncodedFormEntity(nvps, charset));
 			HttpResponse response = httpClient.execute(postMethod);
+			logger.info("请求参数={}", nvps.toString());
 			int statusCode = response.getStatusLine().getStatusCode();
 			resp = EntityUtils.toString(response.getEntity());
 			if (statusCode != HttpStatus.SC_OK) {
@@ -211,6 +213,7 @@ public class HttpClientTool {
 		// 设置表单提交编码为UTF-8
 		try {
 			HttpResponse response = httpClient.execute(getMethod);
+			logger.info("请求参数={}", paramStr.toString());
 			int statusCode = response.getStatusLine().getStatusCode();
 			resp = EntityUtils.toString(response.getEntity());
 			if (statusCode != HttpStatus.SC_OK) {
@@ -241,6 +244,7 @@ public class HttpClientTool {
 		// 设置表单提交编码为UTF-8
 		try {
 			HttpResponse response = httpClient.execute(postMethod);
+			logger.info("请求参数={}", postMethod.getEntity().toString());
 			int statusCode = response.getStatusLine().getStatusCode();
 			resp = EntityUtils.toString(response.getEntity());
 			if (statusCode != HttpStatus.SC_OK) {
@@ -271,6 +275,7 @@ public class HttpClientTool {
 			putMethod.setEntity(se);
 			// 设置表单提交编码为UTF-8
 			HttpResponse response = httpClient.execute(putMethod);
+			logger.info("请求参数={}", se.toString());
 			int statusCode = response.getStatusLine().getStatusCode();
 			resp = EntityUtils.toString(response.getEntity());
 			if (statusCode != HttpStatus.SC_OK) {

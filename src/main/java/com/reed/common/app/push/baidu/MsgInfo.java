@@ -52,6 +52,7 @@ public class MsgInfo {
 		super();
 		this.title = title;
 		this.description = description;
+		//this.getCustom_content().put("data", description);
 		this.aps = new HashMap<String, String>();
 		this.aps.put("alert", this.title);
 		this.aps.put("sound", "");
