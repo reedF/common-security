@@ -5,7 +5,8 @@ import java.util.Map;
 
 /**
  * Baidu message_type = 1 (通知类型) doc:
- * http://developer.baidu.com/wiki/index.php?title=docs/cplat/push/api/list#push_msg
+ * http://developer.baidu.com/wiki/index.php?title
+ * =docs/cplat/push/api/list#push_msg
  * 
  * { //android必选，ios可选 "title" : "hello" , “description: "hello world"
  * 
@@ -25,20 +26,20 @@ import java.util.Map;
  * 
  */
 public class MsgInfo {
-	/** 消息标题 */
+	/** 消息标题 ,弹窗显示的内容 */
 	private String title;
-	/** 消息体，可以是文本或json */
+	/** 消息体，业务数据，可以是文本或json */
 	private String description;
 	/** android */
 	private int notification_builder_id = 0;
 	private int notification_basic_style = 7;
-	private int open_type = 0;
-	private int net_support = 1;
+	private int open_type = 2;
 	private int user_confirm = 0;
 	private String url = "http://developer.baidu.com";
-	private String pkg_content = "";
-	private String pkg_name = "com.baidu.bccsclient";
-	private String pkg_version = "0.1";
+	// private String pkg_content = "";
+	// private int net_support = 1;
+	// private String pkg_name = "com.baidu.bccsclient";
+	// private String pkg_version = "0.1";
 	// android json
 	private Map<String, String> custom_content = new HashMap<String, String>();
 	// ios
@@ -50,11 +51,11 @@ public class MsgInfo {
 
 	public MsgInfo(String title, String description) {
 		super();
-		this.title = title;
-		this.description = description;
-		//this.getCustom_content().put("data", description);
+		// this.title = title;
+		this.description = title;
+		this.custom_content.put("data", description);
 		this.aps = new HashMap<String, String>();
-		this.aps.put("alert", this.title);
+		this.aps.put("alert", title);
 		this.aps.put("sound", "");
 		this.aps.put("badge", "0");
 	}
@@ -99,14 +100,6 @@ public class MsgInfo {
 		this.open_type = open_type;
 	}
 
-	public int getNet_support() {
-		return net_support;
-	}
-
-	public void setNet_support(int net_support) {
-		this.net_support = net_support;
-	}
-
 	public int getUser_confirm() {
 		return user_confirm;
 	}
@@ -123,29 +116,36 @@ public class MsgInfo {
 		this.url = url;
 	}
 
-	public String getPkg_content() {
-		return pkg_content;
-	}
+	// public int getNet_support() {
+	// return net_support;
+	// }
+	//
+	// public void setNet_support(int net_support) {
+	// this.net_support = net_support;
+	// }
+	// public String getPkg_content() {
+	// return pkg_content;
+	// }
+	//
+	// public void setPkg_content(String pkg_content) {
+	// this.pkg_content = pkg_content;
+	// }
+	//
+	// public String getPkg_name() {
+	// return pkg_name;
+	// }
+	//
+	// public void setPkg_name(String pkg_name) {
+	// this.pkg_name = pkg_name;
+	// }
 
-	public void setPkg_content(String pkg_content) {
-		this.pkg_content = pkg_content;
-	}
-
-	public String getPkg_name() {
-		return pkg_name;
-	}
-
-	public void setPkg_name(String pkg_name) {
-		this.pkg_name = pkg_name;
-	}
-
-	public String getPkg_version() {
-		return pkg_version;
-	}
-
-	public void setPkg_version(String pkg_version) {
-		this.pkg_version = pkg_version;
-	}
+	// public String getPkg_version() {
+	// return pkg_version;
+	// }
+	//
+	// public void setPkg_version(String pkg_version) {
+	// this.pkg_version = pkg_version;
+	// }
 
 	public Map<String, String> getCustom_content() {
 		return custom_content;
