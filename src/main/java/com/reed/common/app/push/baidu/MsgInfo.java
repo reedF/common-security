@@ -26,9 +26,9 @@ import java.util.Map;
  * 
  */
 public class MsgInfo {
-	/** 消息标题 ,弹窗显示的内容 */
+	/** 消息标题 , ,为空时显示应用名 */
 	private String title;
-	/** 消息体，业务数据，可以是文本或json */
+	/** 消息弹窗点击后显示的内容 */
 	private String description;
 	/** android */
 	private int notification_builder_id = 0;
@@ -40,7 +40,7 @@ public class MsgInfo {
 	// private int net_support = 1;
 	// private String pkg_name = "com.baidu.bccsclient";
 	// private String pkg_version = "0.1";
-	// android json
+	/** 消息体，业务数据，可以是文本或json */
 	private Map<String, String> custom_content = new HashMap<String, String>();
 	// ios
 	private Map<String, String> aps;
