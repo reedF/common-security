@@ -21,7 +21,15 @@ import com.reed.security.utils.AES;
 
 /**
  * AuthValid注解实现类， 拦截AuthValid注解，校验权限
- * 
+ * 配置文件：
+ * <mvc:annotation-driven />
+   <mvc:interceptors>
+		<bean class="com.reed.common.rest.auth.AuthValidInterceptor">
+			<property name="key">
+				<value>${key}</value>
+			</property>
+		</bean>
+	</mvc:interceptors>
  * @author reed
  * 
  */
