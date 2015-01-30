@@ -67,7 +67,7 @@ public class AuthValidInterceptor extends HandlerInterceptorAdapter {
 		}
 		// 允许跨域
 		response.setHeader("Access-Control-Allow-Origin", "*");
-		
+
 		return r;
 	}
 
@@ -121,7 +121,7 @@ public class AuthValidInterceptor extends HandlerInterceptorAdapter {
 		if (StringUtils.isNotBlank(token)) {
 			String[] user = decrypt(token);
 			if (user != null) {
-				// check user is god or assistant
+				// check user's role
 				Long userId = Long.valueOf(user[0].trim());
 				Short from = Short.valueOf(user[2].trim());
 				if (userId != null && from != null) {
@@ -130,15 +130,17 @@ public class AuthValidInterceptor extends HandlerInterceptorAdapter {
 						if (type.equals(AuthValidRoleEnum.ALL)
 								|| type.equals(AuthValidRoleEnum.Role1)) {
 							// TODO
+							// AbstractController.setUser();
 						} else {
 							makeUpResponse(response, "无权访问相关资源！",
 									RetdCodeType.EX_AUTH);
 						}
 					} else {
-						// assistant
+						// role2
 						if (type.equals(AuthValidRoleEnum.ALL)
 								|| type.equals(AuthValidRoleEnum.Role2)) {
 							// TODO
+							// AbstractController.setUser();
 						} else {
 							makeUpResponse(response, "无权访问相关资源！",
 									RetdCodeType.EX_AUTH);
@@ -186,7 +188,7 @@ public class AuthValidInterceptor extends HandlerInterceptorAdapter {
 	}
 
 	/**
-	 * 从header解密:"userId_失效时间_(登录角色：0,role1;1,role2)"
+	 * 从header解密:格式："userId_失效时间_(登录角色：0,role1;1,role2)"
 	 * 
 	 * @param request
 	 * @return
